@@ -287,7 +287,7 @@ class MessageGenerator
     public function fileName()
     {
         $name = $this->descriptor->full_name;
-        return str_replace(".", DIRECTORY_SEPARATOR, $name) . ".php";
+        return ltrim(str_replace(".", "/"/*DIRECTORY_SEPARATOR*/, $name), "/"/*DIRECTORY_SEPARATOR*/) . ".php";
     }
 
     public function printTraitsInsertionPoint(Printer $printer)

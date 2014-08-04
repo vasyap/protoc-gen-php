@@ -14,7 +14,7 @@ class Printer
 {
     protected $replace;
     protected $level = 0;
-    protected $indent_char = '  ';
+    protected $indent_char = '    ';
     protected $stream;
 
     protected $next;

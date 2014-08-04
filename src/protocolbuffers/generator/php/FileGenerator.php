@@ -147,7 +147,7 @@ class FileGenerator
             foreach ($this->file->getEnumType() as $enum) {
                 $enum->full_name = Helper::getPackageName($this->file) . "." . $enum->getName();
 
-                $path = $package_name . DIRECTORY_SEPARATOR . $enum->getName() . ".php";
+                $path = $package_name . "/"/*DIRECTORY_SEPARATOR*/ . $enum->getName() . ".php";
                 $output = $context->open($path);
                 $file_list[] = $path;
 
@@ -159,7 +159,7 @@ class FileGenerator
             foreach ($this->file->getMessageType() as $message) {
                 $message->full_name = Helper::getPackageName($this->file) . "." . $message->getName();
 
-                $path = $package_name . DIRECTORY_SEPARATOR . $message->getName() . ".php";
+                $path = $package_name . "/"/*DIRECTORY_SEPARATOR*/ . $message->getName() . ".php";
                 $output = $context->open($path);
                 $file_list[] = $path;
 
