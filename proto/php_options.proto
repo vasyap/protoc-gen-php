@@ -10,12 +10,15 @@ message PHPFileOptions {
      PEAR = 2;
   }
   optional Style style = 4 [default = PSR4];
+  optional string namespace = 8001;
+  optional string include_path = 8002;
 }
 
 message PHPMessageOptions {
   optional bool use_single_property = 2 [default = false];
   optional string single_property_name = 3 [default = "_properties"];
   optional bool use_wakeup_and_sleep = 4 [default = false];
+  optional string base_class = 8001 [default = "\\\\ProtocolBuffers\\\\Message"];
 }
 
 extend google.protobuf.FileOptions {

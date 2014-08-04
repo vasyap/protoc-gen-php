@@ -97,11 +97,29 @@ class Compiler
     {
         /* rough parsing, but works fine */
 
+        $include_path = $this->file->getOptions()->getExtension("php")->getIncludePath();
+        if ($include_path) {
+            $include_path = array_map(function($item){ return rtrim(trim($item), '/'); }, explode(",", $include_path));
+        } else {
+            $include_path = array();
+        }
+        array_unshift($include_path, ".");
+
         $result = array();
         foreach ($req->getProtoFile() as $file) {
             /* @var $file FileDescriptorProto */
             $path  = $file->getName();
-            $lines = preg_split("/\r?\n/", file_get_contents($path));
+            $contents = false;
+            foreach ($include_path as $dir) {
+                $file_path = "{$dir}/{$path}";
+                if (is_file($file_path)) {
+                    $contents = file_get_contents($file_path);
+                    break 1;
+                }
+            }
+            if (!$contents) throw new \Exception("Could not find dependency!");
+
+            $lines = preg_split("/\r?\n/", $contents);
             $info = $file->getSourceCodeInfo();
 
             $result[$file->getName()] = array();

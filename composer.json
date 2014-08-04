@@ -1,5 +1,5 @@
 {
-    "name": "protocolbuffers/protoc-gen-php",
+    "name": "vasyap/protoc-gen-php",
     "description": "protoc generator plugin for PECL ProtocolBuffers",
     "type": "library",
     "keywords": [

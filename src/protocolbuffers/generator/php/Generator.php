@@ -49,12 +49,12 @@ class Generator
         try {
             $file_generator = new FileGenerator($context, $file);
 
-            if (!$context->hasOpened("autoload.php")) {
+            /*if (!$context->hasOpened("autoload.php")) {
                 // NOTE: generate autoloader first. it's easier to reuse for extension
                 $printer = new Printer($context->open("autoload.php"), "`");
                 $append_mode = false;
                 $file_generator->generateAutoloader($printer, array(), $append_mode);
-            }
+            }*/
 
             if (Helper::IsPackageNameOverriden($file)) {
                 $package_name = Helper::getPackageName($file);
@@ -63,12 +63,12 @@ class Generator
             }
 
             $package_dir = Helper::phpPackageToDir($package_name);
-            $printer = new Printer($context->open($file->getName() . ".php"), "`");
-            $file_generator->generate($printer);
+            //$printer = new Printer($context->open($file->getName() . ".php"), "`");
+            //$file_generator->generate($printer);
             $file_generator->generateSiblings($package_dir, $context, $file_list);
 
-            $printer = new Printer($context->openForInsert("autoload.php", "autoloader_scope:classmap"), "`");
-            $file_generator->generateAutoloader($printer, $file_list, true);
+            //$printer = new Printer($context->openForInsert("autoload.php", "autoloader_scope:classmap"), "`");
+            //$file_generator->generateAutoloader($printer, $file_list, true);
         } catch (\Exception $e) {
             $error->assign($e->getMessage() . "\n" . $e->getTraceAsString());
         }

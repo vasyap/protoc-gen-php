@@ -2,6 +2,7 @@
 spl_autoload_register(function($name){
   static $classmap;
   if (!$classmap) {
+      $name = ltrim($name, '\\');
     $classmap = array(
       'google\protobuf\FileDescriptorSet' => '/google/protobuf/FileDescriptorSet.php',
       'google\protobuf\FileDescriptorProto' => '/google/protobuf/FileDescriptorProto.php',

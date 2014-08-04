@@ -119,31 +119,35 @@ class Helper
         return $line;
     }
 
-    public static function getClassName($descriptor, $full_qualified = false)
+    public static function getClassName($descriptor, $full_qualified = true)
     {
         if ($descriptor instanceof DescriptorProto || $descriptor instanceof EnumDescriptorProto) {
             if ($full_qualified) {
                 if (self::isPearStyle($descriptor)) {
-                    return str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
+                    $class = str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
                 } else {
-                    return "\\" . ltrim(str_replace(".", "\\", $descriptor->full_name), "\\");
+                    $class = "\\" . ltrim(str_replace(".", "\\", $descriptor->full_name), "\\");
                 }
             } else {
                 if (self::isPearStyle($descriptor)) {
-                    return str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
+                    $class = str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
                 } else {
-                    return $descriptor->getName();
+                    $class = $descriptor->getName();
                 }
             }
         } else if ($descriptor instanceof FieldDescriptorProto) {
             if (self::isPearStyle($descriptor)) {
-                $name = str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->getTypeName()));
+                $class = str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->getTypeName()));
             } else {
-                $name = str_replace(".", "\\", $descriptor->getTypeName());
+                $class = str_replace(".", "\\", $descriptor->getTypeName());
             }
-
-            return $name;
         }
+
+        if ($full_qualified && ($namespace = $descriptor->file()->getOptions()->getExtension("php")->getNamespace())) {
+            $class = "\\" . $namespace . $class;
+        }
+
+        return $class;
     }
 
     public static function getBaseClassName($descriptor)
@@ -151,7 +155,7 @@ class Helper
         //\\ProtocolBuffers\\Message
         if ($descriptor instanceof FileDescriptorProto) {
             if (getenv("PEAR_STYLE") ||
-                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR) {
                 return "ProtocolBuffersMessage";
             } else {
                 return '\ProtocolBuffers\Message';
@@ -160,6 +164,8 @@ class Helper
             if (getenv("PEAR_STYLE") ||
                 $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
                 return "ProtocolBuffersMessage";
+            } elseif ($base_class = $descriptor->getOptions()->getExtension("php_option")->getBaseClass()) {
+                return $base_class;
             } else {
                 return '\ProtocolBuffers\Message';
             }
@@ -211,6 +217,9 @@ class Helper
             if (getenv("PEAR_STYLE") ||
                 $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
                 return 'ProtocolBuffersEnum';
+            } elseif ($base_class = $descriptor->getOptions()->getExtension("php")->getBaseClass()) {
+                ob_start(); var_dump($descriptor->getOptions()->getExtension("php")); trigger_error(ob_end_clean(), E_USER_ERROR);
+                return $base_class;
             } else {
                 return '\ProtocolBuffers\Enum';
             }
@@ -218,6 +227,9 @@ class Helper
             if (getenv("PEAR_STYLE") ||
                 $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
                 return 'ProtocolBuffersEnum';
+            } elseif ($base_class = $descriptor->file()->getOptions()->getExtension("php")->getBaseClass()) {
+                ob_start(); var_dump(123/*$descriptor->file()->getOptions()->getExtension("php")*/); trigger_error(ob_get_clean(), E_USER_ERROR);
+                return $base_class;
             } else {
                 return '\ProtocolBuffers\Enum';
             }

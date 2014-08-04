@@ -37,16 +37,16 @@ class FileGenerator
             $file_list = array();
 
             foreach ($this->file->getEnumType() as $enum) {
-                $gen = new EnumGenerator($this->context, $enum, $file_list);
+                $gen = new EnumGenerator($this->context, $enum, $file_list, $this->file);
                 $gen->generate($printer);
             }
 
             foreach ($this->file->getMessageType() as $message) {
-                $gen = new MessageGenerator($this->context, $message, $file_list);
+                $gen = new MessageGenerator($this->context, $message, $file_list, $this->file);
                 $gen->generate($printer);
             }
         } else {
-            $printer->put("require_once __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';\n");
+            //$printer->put("require_once __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';\n");
         }
     }
 
@@ -152,7 +152,7 @@ class FileGenerator
                 $file_list[] = $path;
 
                 $printer = new Printer($output, "`");
-                $gen = new EnumGenerator($context, $enum, $file_list);
+                $gen = new EnumGenerator($context, $enum, $file_list, $this->file);
                 $gen->generate($printer);
             }
 
@@ -164,7 +164,7 @@ class FileGenerator
                 $file_list[] = $path;
 
                 $printer = new Printer($output, "`");
-                $gen = new MessageGenerator($context, $message, $file_list);
+                $gen = new MessageGenerator($context, $message, $file_list, $this->file);
                 $gen->generate($printer);
             }
 

@@ -10,34 +10,34 @@ namespace PHPFileOptions;
  */
 class Style extends \ProtocolBuffers\Enum
 {
-  // @@protoc_insertion_point(traits:.PHPFileOptions.Style)
-  
-  const PSR4 = 1;
-  const PEAR = 2;
-  
-  // @@protoc_insertion_point(const_scope:.PHPFileOptions.Style)
-  
-  // @@protoc_insertion_point(class_scope:.PHPFileOptions.Style)
-  
-  /**
-   * @return \ProtocolBuffers\EnumDescriptor
-   */
-  public static function getEnumDescriptor()
-  {
-    static $descriptor;
-    if (!$descriptor) {
-      $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
-      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => self::PSR4,
-        "name"  => 'PSR4',
-      )));
-      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => self::PEAR,
-        "name"  => 'PEAR',
-      )));
-      // @@protoc_insertion_point(builder_scope:.PHPFileOptions.Style)
-      $descriptor = $builder->build();
-    }
-    return $descriptor;
-  }
+	// @@protoc_insertion_point(traits:.PHPFileOptions.Style)
+	
+	const PSR4 = 1;
+	const PEAR = 2;
+	
+	// @@protoc_insertion_point(const_scope:.PHPFileOptions.Style)
+	
+	// @@protoc_insertion_point(class_scope:.PHPFileOptions.Style)
+	
+	/**
+	 * @return \ProtocolBuffers\EnumDescriptor
+	 */
+	public static function getEnumDescriptor()
+	{
+		static $descriptor;
+		if (!$descriptor) {
+			$builder = new \ProtocolBuffers\EnumDescriptorBuilder();
+			$builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+				"value" => self::PSR4,
+				"name"  => 'PSR4',
+			)));
+			$builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+				"value" => self::PEAR,
+				"name"  => 'PEAR',
+			)));
+			// @@protoc_insertion_point(builder_scope:.PHPFileOptions.Style)
+			$descriptor = $builder->build();
+		}
+		return $descriptor;
+	}
 }
